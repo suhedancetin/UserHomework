@@ -24,7 +24,7 @@ sap.ui.define([
             var oViewModel;
 
             // keeps the search state
-            this._aTableSearchState = [];
+            this._aTableSearchState = []; 
 
             // Model used to manipulate control states
             oViewModel = new JSONModel({
