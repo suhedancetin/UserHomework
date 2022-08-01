@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
 
 specVersion: "2.5"
 metadata:
@@ -8,8 +8,7 @@ server:
   customMiddleware:
     - name: fiori-tools-proxy
       afterMiddleware: compression
-      configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+      configuration:# If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         ui5:
           path:
             - /resources

@@ -1,9 +1,9 @@
-/*eslint-disable semi, no-console*/
+
 (function (sap) {
   var fioriToolsGetManifestLibs = function (manifestPath) {
     var url = manifestPath;
     var result = "";
-    // SAPUI5 delivered namespaces from https://ui5.sap.com/#/api/sap
+
     var ui5Libs = [
       "sap.apf",
       "sap.base",
@@ -28,9 +28,9 @@
       "sap.webanalytics",
       "sap.zen"
     ];
-    function getKeys(libOrComp,libOrCompKeysString) {
+    function getKeys(libOrComp, libOrCompKeysString) {
       Object.keys(libOrComp).forEach(function (libOrCompKey) {
-        // ignore libs or Components that start with SAPUI5 delivered namespaces
+
         if (!ui5Libs.some(function (substring) { return libOrCompKey === substring || libOrCompKey.startsWith(substring + "."); })) {
           if (libOrCompKeysString.length > 0) {
             libOrCompKeysString = libOrCompKeysString + "," + libOrCompKey;
@@ -49,10 +49,10 @@
               manifest["sap.ui5"] &&
               manifest["sap.ui5"].dependencies
             ) {
-              if (manifest["sap.ui5"].dependencies.libs){
+              if (manifest["sap.ui5"].dependencies.libs) {
                 result = getKeys(manifest["sap.ui5"].dependencies.libs, result)
               }
-              if (manifest["sap.ui5"].dependencies.components){
+              if (manifest["sap.ui5"].dependencies.components) {
                 result = getKeys(manifest["sap.ui5"].dependencies.components, result)
               }
             }
@@ -70,15 +70,9 @@
         });
     });
   };
-  /**
-   * Registers the module paths for dependencies of the given component.
-   * @param {string} manifestPath The the path to the app manifest path
-   * for which the dependencies should be registered.
-   * @returns {Promise} A promise which is resolved when the ajax request for
-   * the app-index was successful and the module paths were registered.
-   */
+
   sap.registerComponentDependencyPaths = function (manifestPath) {
-    /*eslint-disable semi, consistent-return*/
+
     return fioriToolsGetManifestLibs(manifestPath).then(function (libs) {
       if (libs && libs.length > 0) {
         var url = "/sap/bc/ui2/app_index/ui5_app_info?id=" + libs;
@@ -111,11 +105,11 @@
   };
 })(sap);
 
-/*eslint-disable sap-browser-api-warning, sap-no-dom-access*/
+
 var scripts = document.getElementsByTagName("script");
 var currentScript = document.getElementById('locate-reuse-libs');
-if(!currentScript){
-    currentScript = document.currentScript;
+if (!currentScript) {
+  currentScript = document.currentScript;
 };
 var manifestUri = currentScript.getAttribute("data-sap-ui-manifest-uri");
 var componentName = currentScript.getAttribute("data-sap-ui-componentName");
@@ -126,7 +120,7 @@ sap.registerComponentDependencyPaths(manifestUri)
   })
   .finally(function () {
 
-    // setting the app title with internationalization
+
     sap.ui.getCore().attachInit(function () {
       jQuery.sap.require("jquery.sap.resources");
       var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
@@ -141,17 +135,17 @@ sap.registerComponentDependencyPaths(manifestUri)
       if (useMockserver && useMockserver === "true") {
         sap.ui.getCore().attachInit(function () {
           sap.ui.require([componentName.replace(/\./g, "/") + "/localService/mockserver"], function (server) {
-            // set up test service for local testing
+
             server.init();
-            // initialize the ushell sandbox component
+
             sap.ushell.Container.createRenderer().placeAt("content");
           });
         });
       } else {
-        // Requiring the ComponentSupport module automatically executes the component initialisation for all declaratively defined components
+
         sap.ui.require(["sap/ui/core/ComponentSupport"]);
 
-        // setting the app title with the i18n text
+
         sap.ui.getCore().attachInit(function () {
           jQuery.sap.require("jquery.sap.resources");
           var sLocale = sap.ui.getCore().getConfiguration().getLanguage();
@@ -164,7 +158,7 @@ sap.registerComponentDependencyPaths(manifestUri)
       }
     } else {
       sap.ui.getCore().attachInit(function () {
-        // initialize the ushell sandbox component
+
         sap.ushell.Container.createRenderer().placeAt("content");
       });
     }

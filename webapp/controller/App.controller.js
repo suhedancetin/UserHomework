@@ -5,8 +5,8 @@ sap.ui.define([
 
     return BaseController.extend("com.ntt.sm.userproject.controller.App", {
 
-        onInit : function () {
-            // apply content density mode to root view
+        onInit: function () {
+
             this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
         }
     });
